@@ -22,14 +22,14 @@ final class MemberPimcore
 
     /**
      * Call this method to get singleton
-     * @param $memberForgeRock
+     * @param $memberForgeRockID
      * @return \Pimcore\Model\DataObject|null
      */
-    public static function Instance($memberForgeRock)
+    public static function Instance($memberForgeRockID)
     {
         if (self::$instance === null) {
             $member = new  \App\Forgerock\Repositories\MembersRepository(new \Illuminate\Container\Container());
-            $result = $member->findBy("forgeRockId", $memberForgeRock->_id);
+            $result = $member->findBy("forgeRockId", $memberForgeRockID);
             if (count($result) == 1) {
                 self::$instance = $result[0];
             } else {

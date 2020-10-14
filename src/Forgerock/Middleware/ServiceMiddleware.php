@@ -49,20 +49,14 @@ class ServiceMiddleware
                 throw new FRSignatureInvalidException(["token" => [$e->getMessage()]], Response::HTTP_UNPROCESSABLE_ENTITY, "AUTH422");
             } catch (ExpiredException $e) {
                 $this->logging('VERIFY_TOKEN', 'forge-rock', $e->getMessage());
-                throw new ForgeRockExceptions(["token" => [$e->getMessage()]],Response::HTTP_UNAUTHORIZED, "AUTH401");
+                throw new ForgeRockExceptions(["token" => [$e->getMessage()]], Response::HTTP_UNAUTHORIZED, "AUTH401");
             } catch (\Exception $e) {
                 $this->logging('VERIFY_TOKEN', 'forge-rock', $e->getMessage());
                 throw new ForgeRockExceptions(["token" => [$e->getMessage()]], Response::HTTP_INTERNAL_SERVER_ERROR, "AUTH500");
             }
 
-            $identityManagement = new IdentityManagement();
-            try {
-                $memberForgeRock = $identityManagement->getMe($token);
-            } catch (\Exception $e) {
-                throw new ForgeRockExceptions(["token" => [$e->getMessage()]], Response::HTTP_INTERNAL_SERVER_ERROR, "AUTH500");
-            }
-            $memberPimcore = MemberPimcore::Instance($memberForgeRock);
-            $request->request->add(['memberForgeRock' => $memberForgeRock]);
+            $memberForgeRockID = $decodedData->sub;
+            $memberPimcore = MemberPimcore::Instance($memberForgeRockID);
             $request->request->add(['memberPimcore' => $memberPimcore]);
             return $next($request);
         } else {
