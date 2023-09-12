@@ -1,13 +1,20 @@
 ## Installation
 
 ```bash
-composer require samuelerwardi/forgerock
+composer require herusalt/forgerock
 ```
 ### Modify bootstrap/app.php
 add this line
 ```
  $app->routeMiddleware([
      'auth' => \App\Forgerock\Middlewere\ServiceMiddleware::class
+       ...
+  ]);
+```
+or
+```
+ $app->routeMiddleware([
+     'auth' => \App\Forgerock\Middlewere\MemberPimcoreMiddleware::class
        ...
   ]);
 ```
