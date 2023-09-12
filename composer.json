@@ -1,12 +1,12 @@
 {
-    "name": "samuelerwardi/forgerock",
+    "name": "herusalt/forgerock",
     "description": "Forgerock middleware package",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
-            "name": "samuelerwardi",
-            "email": "samuelerwardi@gmail.com"
+            "name": "heru rahmat",
+            "email": "heru.akhnuari@salt.co.id"
         }
     ],
     "minimum-stability": "stable",
