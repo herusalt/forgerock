@@ -52,7 +52,7 @@ class ServiceMiddleware
                 throw new ForgeRockExceptions(["token" => [$e->getMessage()]], Response::HTTP_UNAUTHORIZED, "AUTH401");
             } catch (\Exception $e) {
                 $this->logging('VERIFY_TOKEN', 'forge-rock', $e->getMessage());
-                throw new ForgeRockExceptions(["token" => [$e->getMessage()]], Response::HTTP_INTERNAL_SERVER_ERROR, "AUTH500");
+                throw new ForgeRockExceptions(["token" => [$e->getMessage()]], Response::HTTP_UNPROCESSABLE_ENTITY, "AUTH500");
             }
 
             $memberForgeRockID = $decodedData->sub;
