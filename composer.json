@@ -9,12 +9,13 @@
             "email": "heru.akhnuari@salt.co.id"
         }
     ],
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {"App\\Forgerock\\": "src/"}
     },
     "require": {
         "codercat/jwk-to-pem": "^0.0.3",
         "lcobucci/jwt": "^3.4"
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
