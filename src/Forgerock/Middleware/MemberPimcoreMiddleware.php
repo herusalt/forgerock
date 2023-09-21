@@ -45,7 +45,13 @@ class MemberPimcoreMiddleware
             try {
                 $parseData = $parser->parse($token);
             } catch (CannotDecodeContent | InvalidTokenStructure | UnsupportedHeaderFound $e) {
-                echo 'Oh no, an error: ' . $e->getMessage();
+                return response()->json([
+                    'status' => false,
+                    'code' => "AUTH401",
+                    'message' => null,
+                    'errorMessage' => "invalid processing token",
+                    'data' => null
+                ], $responseCode);
             }
            
 
@@ -58,9 +64,7 @@ class MemberPimcoreMiddleware
                 'status' => false,
                 'code' => "AUTH401",
                 'message' => null,
-                'errorMessage' => [
-                    "token" => [__("message.required")]
-                ],
+                'errorMessage' => "token not validate",
                 'data' => null
             ], $responseCode);
         }
