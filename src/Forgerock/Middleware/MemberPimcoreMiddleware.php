@@ -3,7 +3,7 @@
  * Samuelerwardi samuelerwardi@gmail.com
  */
 
-namespace App\Http\Middleware;
+namespace App\Forgerock\Middlewere;
 
 use Closure;
 use Lcobucci\JWT\Parser;
