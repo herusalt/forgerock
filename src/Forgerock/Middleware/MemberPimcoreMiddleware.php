@@ -83,9 +83,9 @@ class MemberPimcoreMiddleware
     private function validationAud($parseData)
     {
         $aud = $parseData->claims()->get('aud');
-        $envAud = env('FR_VALID_AUD');
-
-        if ($envAud == $aud) {
+        $envAud = explode(",",env('FR_VALID_AUD'));
+        
+        if (in_array($aud,$envAud)) {
             return true;
         }
 
@@ -95,8 +95,9 @@ class MemberPimcoreMiddleware
     private function validationExpired($parseData)
     {
         $expired = $parseData->claims()->get('exp');
+        $expiredInt = date_timestamp_get($expired);
 
-        if ($expired > time()){
+        if ($expiredInt > time()){
             return true;
         }
 
