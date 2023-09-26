@@ -53,6 +53,16 @@ class MemberPimcoreMiddleware
                     'data' => null
                 ], $responseCode);
             }
+
+            if ((!$this->validationAud($parseData)) || (!$this->validationExpired($parseData))) {
+                return response()->json([
+                    'status' => false,
+                    'code' => "AUTH401",
+                    'message' => null,
+                    'errorMessage' => "token expired or not valid",
+                    'data' => null
+                ], $responseCode);
+            }
            
 
             $memberForgeRockID = $parseData->claims()->get('sub');
@@ -68,6 +78,30 @@ class MemberPimcoreMiddleware
                 'data' => null
             ], $responseCode);
         }
+    }
+
+    private function validationAud($parseData)
+    {
+        $aud = $parseData->claims()->get('aud');
+        $envAud = env('FR_VALID_AUD');
+
+        if ($envAud == $aud) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function validationExpired($parseData)
+    {
+        $expired = $parseData->claims()->get('exp');
+
+        if ($expired > time()){
+            return true;
+        }
+
+        return false;
+
     }
 
 }
